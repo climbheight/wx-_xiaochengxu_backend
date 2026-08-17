@@ -8,3 +8,5 @@ class Welcome(models.Model):
     # 这个字段以后不用传，会自动把上传图片的时间存到数据库
     create_time = models.DateTimeField(auto_now=True)
     is_delete = models.BooleanField(default=False)
+    class Meta:
+        verbose_name_plural = "欢迎表"
