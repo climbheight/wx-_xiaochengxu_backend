@@ -1,0 +1,19 @@
+# 虚拟环境
+.venv/
+
+# sqlite数据库文件
+*.sqlite3
+
+# 用户上传图片
+media/
+
+# Python缓存文件
+__pycache__/
+*.pyc
+*.pyo
+
+# PyCharm配置
+.idea/
+
+# 密钥环境文件
+.env
