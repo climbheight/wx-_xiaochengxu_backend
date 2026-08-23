@@ -25,13 +25,14 @@ SECRET_KEY = "django-insecure-1qmh7j_8!4%t(kers)e3_q1s^5rp+x*_g&420lpmvp$((d(4k#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     "simpleui",
+    "rest_framework",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

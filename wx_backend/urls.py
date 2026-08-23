@@ -20,7 +20,13 @@ from django.urls import path
 from django.views.static import serve
 from django.conf import settings
 from .views import welcome
+
+from rest_framework.routers import SimpleRouter
+from .views import BannerView
+router = SimpleRouter()
+router.register("banner",BannerView,"banner")
 urlpatterns = [
     path("welcome/", welcome),
 
 ]
+urlpatterns += router.urls
