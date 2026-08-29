@@ -13,11 +13,11 @@ def welcome(request):
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import ListModelMixin
 from .models import Banner,Notice
-from .serializer import BannerSerializer, NoticeSerializer
+from .serializer import BannerSerializer, NoticeSerializer,CollectionSerializer
 
 
 class BannerView(GenericViewSet, ListModelMixin):
-    queryset = Banner.objects.filter(is_delete=False).order_by('order')[:2]
+    queryset = Banner.objects.filter(is_delete=False).order_by('order')[:3]
     serializer_class = BannerSerializer
     def list(self,request,*args,**kwargs):
         res =super().list(request,*args,**kwargs)
@@ -25,3 +25,18 @@ class BannerView(GenericViewSet, ListModelMixin):
         notice =Notice.objects.all().order_by("create_time").first()
         serializer = NoticeSerializer(instance=notice)
         return Response({"code":100,"msg":"成功","banner":res.data,"notice":serializer.data})
+
+
+from .models import Collection
+from datetime import datetime
+from rest_framework.mixins import ListModelMixin,DestroyModelMixin
+
+class CollectionView(GenericViewSet, ListModelMixin,DestroyModelMixin):
+    # 查出当天的--》没过滤当前用户
+    queryset = Collection.objects.all().filter(create_time__gte=datetime.now().date())
+    serializer_class = CollectionSerializer
+
+    def list(self,request,*args,**kwargs):
+        res = super().list(request,*args,**kwargs)
+        today_count=len(self.get_queryset())
+        return Response({"code":100,"msg":"成功","result":res.data,"today_count":{today_count}})

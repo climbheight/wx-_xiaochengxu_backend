@@ -36,3 +36,35 @@ class Welcome(models.Model):
         verbose_name_plural = "欢迎表"
     def __str__(self):
         return str(self.img)
+### 采集表
+class Collection(models.Model):
+    name = models.CharField(max_length=32, verbose_name='采集人员姓名')
+    name_pinyin = models.CharField(max_length=32, verbose_name='姓名拼音', null=True)
+    avatar = models.ImageField(upload_to='collection/%Y/%m/%d/', default='default.png', verbose_name='头像')
+    create_time = models.DateTimeField(auto_now=True, verbose_name='采集时间')
+    area = models.ForeignKey(to='Area', null=True, verbose_name='网格区域', on_delete=models.CASCADE)
+    class Meta:
+        verbose_name_plural = "采集表"
+    def __str__(self):
+        return self.name
+###区域表
+class Area(models.Model):
+    name = models.CharField(max_length=32, verbose_name='网格区域名')
+    desc = models.CharField(max_length=32, verbose_name='网格简称')
+    user = models.ForeignKey(to='UserInfo', on_delete=models.CASCADE, null=True, verbose_name="负责用户")
+
+    class Meta:
+        verbose_name_plural = '区域表'
+    def __str__(self):
+        return self.name
+class UserInfo(models.Model):
+    name = models.CharField(verbose_name="姓名", max_length=32)
+    avatar = models.FileField(verbose_name="头像", max_length=128, upload_to='avatar')
+    create_date = models.DateField(verbose_name="日期", auto_now_add=True)
+    score = models.IntegerField(verbose_name="积分", default=0)
+
+    class Meta:
+        verbose_name_plural = '用户表'
+
+    def __str__(self):
+        return self.name
